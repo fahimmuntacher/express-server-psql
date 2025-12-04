@@ -7,5 +7,7 @@ const router = Router();
 router.post("/signup", authControllers.signUp);
 
 // signIn
+router.post("/signin", authControllers.signIn)
+
 
 export const authRouter = router;
