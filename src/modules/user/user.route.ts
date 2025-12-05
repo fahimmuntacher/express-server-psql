@@ -7,5 +7,6 @@ const router = Router()
 // get all user
 router.get("/", auth(), usersControllers.getAllUsers)
 router.put("/:userId", usersControllers.updateUser)
+router.delete("/:userId", usersControllers.deleteUser)
 
 export const userRoute = router 
