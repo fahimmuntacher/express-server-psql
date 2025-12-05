@@ -3,6 +3,7 @@ import express, { Request, Response } from "express";
 import { initDb } from "./database/db";
 import { authRouter } from "./modules/auth/auth.routes";
 import { vehiclesRouter } from "./modules/vehicles/vehicles.routes";
+import { userRoute } from "./modules/user/user.route";
 
 const app = express();
 const port = 5000;
@@ -14,6 +15,9 @@ initDb();
 
 // auth CRUD
 app.use("/api/v1/auth", authRouter);
+
+// users CRUD
+app.use("/api/v1/users", userRoute)
 
 // vehicle CRUD 
 app.use("/api/v1/vehicles", vehiclesRouter);
