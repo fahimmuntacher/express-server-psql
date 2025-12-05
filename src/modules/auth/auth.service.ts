@@ -1,19 +1,21 @@
 import bcrypt from "bcryptjs";
 import { pool } from "../../database/db";
-import jwt from 'jsonwebtoken'
-
+import jwt from "jsonwebtoken";
 
 // signUp services
-const signUp = async (
+const signUpService = async (
   name: string,
   email: string,
+  role: string,
   password: string,
   phone: string
 ) => {
   const result = await pool.query(
-    `INSERT INTO users(name, email, password, phone) VALUES($1, $2, $3, $4) RETURNING *`,
-    [name, email, password, phone]
+    `INSERT INTO users(name, email, role, password, phone)
+     VALUES($1,$2,$3,$4,$5) RETURNING *`,
+    [name, email, role, password, phone]
   );
+
   return result;
 };
 
@@ -28,22 +30,26 @@ const signIn = async (email: string, password: string) => {
   }
 
   const user = result.rows[0];
-//   console.log(user);
+  //   console.log(user);
   const matchedPass = await bcrypt.compare(password, user.password);
-    // console.log(matchedPass);
+  // console.log(matchedPass);
   if (!matchedPass) {
     return false;
   }
 
-  const jwt_secret = `${process.env.JWT_SECRET}`
-   const token = jwt.sign({name : user.name, email : user.email}, jwt_secret as string, {
-        expiresIn : "1d"
-    });
+  const jwt_secret = `${process.env.JWT_SECRET}`;
+  const token = jwt.sign(
+    {id: user.id, name: user.name, email: user.email, role: user.role },
+    jwt_secret as string,
+    {
+      expiresIn: "1d",
+    }
+  );
   //   console.log(user);
   return { token, user };
 };
 
 export const authService = {
-  signUp,
+  signUpService,
   signIn,
 };

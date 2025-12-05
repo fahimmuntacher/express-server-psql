@@ -2,6 +2,7 @@ import express, { Request, Response } from "express";
 
 import { initDb } from "./database/db";
 import { authRouter } from "./modules/auth/auth.routes";
+import { vehiclesRouter } from "./modules/vehicles/vehicles.routes";
 
 const app = express();
 const port = 5000;
@@ -13,6 +14,9 @@ initDb();
 
 // auth CRUD
 app.use("/api/v1/auth", authRouter);
+
+// vehicle CRUD 
+app.use("/api/v1/vehicles", vehiclesRouter);
 
 app.get("/", (req: Request, res: Response) => {
   res.status(200).json({

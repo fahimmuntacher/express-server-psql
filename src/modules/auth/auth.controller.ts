@@ -4,10 +4,16 @@ import bcrypt from "bcryptjs";
 
 // user signup
 const signUp = async (req: Request, res: Response) => {
-  const { name, email, password, phone } = req.body;
+  const { name, email, role, password, phone } = req.body;
   const hashedPassword = bcrypt.hashSync(password, 10);
   try {
-    const result = await authService.signUp(name, email, hashedPassword, phone);
+    const result = await authService.signUpService(
+      name,
+      email,
+      role,
+      hashedPassword,
+      phone
+    );
     res.status(201).json({
       success: true,
       message: "User registered successfully",
@@ -30,17 +36,17 @@ const signIn = async (req: Request, res: Response) => {
     res.status(200).json({
       success: true,
       message: "Login successful",
-      data : result
+      data: result,
     });
-  } catch (error : any) {
+  } catch (error: any) {
     res.status(500).json({
-        success : false,
-        message : error.message
-    })
+      success: false,
+      message: error.message,
+    });
   }
 };
 
 export const authControllers = {
   signUp,
-  signIn
+  signIn,
 };
