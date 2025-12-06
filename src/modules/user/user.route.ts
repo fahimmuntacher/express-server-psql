@@ -2,11 +2,11 @@ import { Router } from "express";
 import { usersControllers } from "./user.controllers";
 import { auth } from "../../middleware/auth";
 
-const router = Router()
+const router = Router();
 
 // get all user
-router.get("/", auth(), usersControllers.getAllUsers)
-router.put("/:userId", usersControllers.updateUser)
-router.delete("/:userId", usersControllers.deleteUser)
+router.get("/", auth("admin"), usersControllers.getAllUsers);
+router.put("/:userId", auth("admin", "customer"), usersControllers.updateUser);
+router.delete("/:userId", auth("admin"), usersControllers.deleteUser);
 
-export const userRoute = router 
+export const userRoute = router;
