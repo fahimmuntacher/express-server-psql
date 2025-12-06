@@ -45,7 +45,9 @@ const getVehicles = async (req: Request, res: Response) => {
 // get single vehicle
 const getSingleVehicle = async (req: Request, res: Response) => {
   try {
-    const result = await vehiclesServices.getSingleVehicle(req.params.vehicleId!);
+    const result = await vehiclesServices.getSingleVehicle(
+      req.params.vehicleId!
+    );
     if (result.rows.length === 0) {
       res.status(401).json({
         success: false,
@@ -59,16 +61,52 @@ const getSingleVehicle = async (req: Request, res: Response) => {
       });
     }
     console.log(result.rows);
-  } catch (error : any) {
-     res.status(500).json({
+  } catch (error: any) {
+    res.status(500).json({
       success: false,
       message: error.message,
     });
   }
 };
 
+// update vehicle
+
+const updateVehicle = async (req: Request, res: Response) => {
+  const {
+    vehicle_name,
+    type,
+    registration_number,
+    daily_rent_price,
+    availability_status,
+  } = req.body;
+
+  try {
+    const result = await vehiclesServices.vehicleUpdate(
+      req.params.vehicleId!, 
+      vehicle_name,
+      type,
+      registration_number,
+      daily_rent_price,
+      availability_status
+    );
+
+    return res.status(200).json({
+      success: true,
+      message: "Vehicle updated successfully",
+      data: result.rows[0],
+    });
+  } catch (error: any) {
+    return res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
+
+
 export const vehiclesControoler = {
   createVehicle,
   getVehicles,
-  getSingleVehicle
+  getSingleVehicle,
+  updateVehicle
 };
