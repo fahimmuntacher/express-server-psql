@@ -82,7 +82,7 @@ const updateVehicle = async (req: Request, res: Response) => {
 
   try {
     const result = await vehiclesServices.vehicleUpdate(
-      req.params.vehicleId!, 
+      req.params.vehicleId!,
       vehicle_name,
       type,
       registration_number,
@@ -103,10 +103,27 @@ const updateVehicle = async (req: Request, res: Response) => {
   }
 };
 
+// delte vehicle
+const delteVehicel = async (req: Request, res: Response) => {
+  try {
+    const result = await vehiclesServices.deleteVehicle(req.params.vehicleId!);
+    res.status(200).json({
+      success: true,
+      message: "User deleted successfully",
+      data: result.rows[0],
+    });
+  } catch (error: any) {
+    res.status(500).json({
+      success: false,
+      message: error.message,
+    });
+  }
+};
 
 export const vehiclesControoler = {
   createVehicle,
   getVehicles,
   getSingleVehicle,
-  updateVehicle
+  updateVehicle,
+  delteVehicel
 };

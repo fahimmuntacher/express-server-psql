@@ -11,4 +11,5 @@ import { auth } from "../../middleware/auth";
    router.get("/", vehiclesControoler.getVehicles);
   router.get("/:vehicleId", vehiclesControoler.getSingleVehicle)
   router.put("/:vehicleId", auth("admin"), vehiclesControoler.updateVehicle)
+  router.delete("/:vehicleId", auth("admin"), vehiclesControoler.delteVehicel)
  export const vehiclesRouter = router; 
