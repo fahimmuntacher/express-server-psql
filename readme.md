@@ -49,22 +49,6 @@ This API handles all core functionalities required in a vehicle rental business:
 
 ---
 
-## 📂 Folder Structure
-
-src/
-├── config/          # Configuration files (database, env, etc.)
-├── controllers/     # Route controllers (handle request/response logic)
-├── middlewares/     # Custom middlewares (auth, error handling, etc.)
-├── routes/          # Application routes definition
-├── services/        # Business logic and external API integrations
-├── utils/           # Helper functions and utilities
-├── app.ts           # Express app setup (middlewares, routes mounting)
-└── server.ts        # Server entry point (port listening, graceful shutdown)
-
-
-
----
-
 ## 🚀 Key Features
 
 - 🔒 JWT Authentication with Role-Based Access (RBAC)
